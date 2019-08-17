@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block body %}
+{% if source %}
+<h1 id="source">Articles by - {{ source.name }} </h1>
+{% endif %}
+{% if not source %}
+<h3 class="newest">Newest Content From Each Source</h3>
+{% endif %}
+<div class="row justify-content-center">
+    {% for article in recent %}
+    <div class="col-lg-4 col-md-6 col-sm-12" style="margin:20px 0px">
+        <div class="card" style="width:30rem;">
+            <img src="{{article[0].img_path}} " class="card-img-top" style="width:100%; height:250px" />
+            <div class="card-body">
+                <h4 class="card-title"><a href="{{article[0].url}}" target="_blank">{{ article[0].title[:60] }} ..</a>
+                </h4>
+                <h5>{{ article[0].date_created }} </h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<br />
+{% if not source %}
+<h2 class="newest">Recent Articles</h2>
+{% endif %}
+<div class="row">
+    {% for article in articles.items %}
+    <div class="col-lg-3 col-md-6 col-sm-12" style="margin:20px 0px">
+        <div class="card" style="width:20rem;">
+            <img src="{{article.img_path}} " class="card-img-top" style="width:100%; height:200px" />
+            <div class="card-body">
+                <h4 class="card-title"><a href="{{article.url}}" target="_blank">{{ article.title[:60] }} ..</a></h4>
+                <h5>{{ article.date_created }} </h5>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<div class="row justify-content-center">
+    {% for page_num in articles.iter_pages() %}
+    {% if page_num %}
+    <a class="btn btn-info" style="margin-right:10px;" href="{{ url_for('home', page=page_num) }}">{{ page_num }}</a>
+    {% else %}
+    <span style="padding:0 5px; margin-right:15px;">. . .</span>
+    {% endif %}
+    {% endfor %}
+</div>
+
+{% endblock body %}

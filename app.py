@@ -1,0 +1,6 @@
+from contentag import app
+
+if __name__ == "__main__":
+    app.run(debug=True)
+    app.run('localhost', 5555)
+
